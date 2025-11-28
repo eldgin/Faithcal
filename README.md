@@ -20,7 +20,7 @@ A clean, professional website for posting and discovering faith-based events inc
 - **Database**: Prisma ORM with SQLite
 - **Authentication**: NextAuth.js
 - **Payments**: Stripe
-- **State Management**: nuqs for URL search params
+- **State Management**: Next.js native search params
 - **Animations**: Framer Motion
 
 ## Getting Started
@@ -117,7 +117,7 @@ prisma/
 ### Search & Filter
 - Full-text search across event titles, descriptions, and locations
 - Category-based filtering
-- URL state management with nuqs
+- URL state management with Next.js native search params
 
 ## Development
 
