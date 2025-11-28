@@ -56,7 +56,6 @@ export default function ContactPage() {
             </Card>
           </div>
         </main>
-        <MainFooter />
       </div>
     )
   }
