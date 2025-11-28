@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  name      String?
+  password  String?
+  isPremium Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Event[]
+  payments  Payment[]
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  events    Event[]
+}
+
+model Event {
+  id              String       @id @default(cuid())
+  title           String
+  description     String
+  categoryId      String
+  category        Category     @relation(fields: [categoryId], references: [id])
+  startDate       DateTime
+  startTime       String
+  location        String
+  performers      String?
+  speakers        String?
+  topics          String?
+  userId          String?
+  user            User?        @relation(fields: [userId], references: [id])
+  isPrimePlacement Boolean     @default(false)
+  primePlacementType String?   // "homepage", "category", "search"
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  media           EventMedia[]
+  payments        Payment[]
+}
+
+model EventMedia {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  type      String   // "image", "audio", "video"
+  url       String
+  duration  Int?     // Duration in seconds for audio/video
+  createdAt DateTime @default(now())
+}
+
+model Payment {
+  id              String   @id @default(cuid())
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id])
+  eventId         String
+  event           Event    @relation(fields: [eventId], references: [id])
+  amount          Float
+  stripePaymentId String   @unique
+  status          String   // "pending", "completed", "failed"
+  createdAt       DateTime @default(now())
+}
+
