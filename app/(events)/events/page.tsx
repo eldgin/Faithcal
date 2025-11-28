@@ -19,7 +19,7 @@ async function getEvents(searchParams: SearchParams) {
     ]
   }
 
-  if (searchParams.category) {
+  if (searchParams.category && searchParams.category !== "all") {
     where.category = {
       slug: searchParams.category,
     }

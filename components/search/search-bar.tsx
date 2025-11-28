@@ -23,7 +23,8 @@ export function SearchBar() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "")
-  const [category, setCategory] = useState(searchParams.get("category") || "")
+  const categoryParam = searchParams.get("category") || ""
+  const [category, setCategory] = useState(categoryParam || "all")
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
@@ -35,11 +36,15 @@ export function SearchBar() {
     fetchCategories()
   }, [])
 
+  useEffect(() => {
+    setCategory(categoryParam || "all")
+  }, [categoryParam])
+
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
     const params = new URLSearchParams()
     if (searchQuery) params.set("q", searchQuery)
-    if (category) params.set("category", category)
+    if (category && category !== "all") params.set("category", category)
     router.push(`/events?${params.toString()}`)
   }
 
@@ -59,7 +64,7 @@ export function SearchBar() {
           <SelectValue placeholder="All Categories" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">All Categories</SelectItem>
+          <SelectItem value="all">All Categories</SelectItem>
           {categories.map((cat) => (
             <SelectItem key={cat.id} value={cat.slug}>
               {cat.name}
