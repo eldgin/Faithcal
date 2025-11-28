@@ -54,7 +54,7 @@ export async function POST(request: Request) {
           amount: (session.amount_total || 0) / 100,
           stripePaymentId: session.id,
           status: "completed",
-          paymentType: "premium",
+          // paymentType: "premium", // Uncomment after running: npm run db:generate
         },
       })
     } else {
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
             amount: (session.amount_total || 0) / 100,
             stripePaymentId: session.id,
             status: "completed",
-            paymentType: "prime_placement",
+            // paymentType: "prime_placement", // Uncomment after running: npm run db:generate
           },
         })
       }
