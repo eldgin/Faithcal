@@ -100,7 +100,7 @@ export default async function DashboardPage() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <p className="text-muted-foreground mb-4">
-                    You haven't posted any events yet.
+                    You haven&apos;t posted any events yet.
                   </p>
                   <a
                     href="/events/create"

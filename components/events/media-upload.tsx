@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { X, Upload, Image as ImageIcon, Music, Video } from "lucide-react"
@@ -141,22 +142,26 @@ export function MediaUpload({ mediaFiles, onMediaChange }: MediaUploadProps) {
           />
           {mediaFiles.images.length > 0 && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-              {mediaFiles.images.map((file, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-32 object-cover border border-border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-2 right-2 bg-destructive text-destructive-foreground p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ))}
+              {mediaFiles.images.map((file, index) => {
+                const imageUrl = URL.createObjectURL(file)
+                return (
+                  <div key={index} className="relative group">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={imageUrl}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-32 object-cover border border-border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="absolute top-2 right-2 bg-destructive text-destructive-foreground p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>

@@ -87,7 +87,7 @@ export function LoginForm() {
             className="w-full"
             onClick={() => router.push("/register")}
           >
-            Don't have an account? Register
+            Don&apos;t have an account? Register
           </Button>
           <Button
             type="button"
