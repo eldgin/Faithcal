@@ -40,9 +40,30 @@ interface Category {
   slug: string
 }
 
-export function EventForm() {
+interface EventFormProps {
+  event?: {
+    id: string
+    title: string
+    description: string
+    categoryId: string
+    startDate: Date
+    startTime: string
+    location: string
+    performers?: string | null
+    speakers?: string | null
+    topics?: string | null
+    media: Array<{
+      id: string
+      type: string
+      url: string
+    }>
+  }
+}
+
+export function EventForm({ event }: EventFormProps = {}) {
   const router = useRouter()
   const { data: session } = useSession()
+  const isEditMode = !!event
   const [categories, setCategories] = useState<Category[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -64,6 +85,19 @@ export function EventForm() {
     formState: { errors },
   } = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
+    defaultValues: event
+      ? {
+          title: event.title,
+          description: event.description,
+          categoryId: event.categoryId,
+          startDate: new Date(event.startDate).toISOString().split("T")[0],
+          startTime: event.startTime,
+          location: event.location,
+          performers: event.performers || "",
+          speakers: event.speakers || "",
+          topics: event.topics || "",
+        }
+      : undefined,
   })
 
   const categoryId = watch("categoryId")
@@ -76,6 +110,20 @@ export function EventForm() {
     }
     fetchCategories()
   }, [])
+
+  useEffect(() => {
+    if (event) {
+      setValue("title", event.title)
+      setValue("description", event.description)
+      setValue("categoryId", event.categoryId)
+      setValue("startDate", new Date(event.startDate).toISOString().split("T")[0])
+      setValue("startTime", event.startTime)
+      setValue("location", event.location)
+      setValue("performers", event.performers || "")
+      setValue("speakers", event.speakers || "")
+      setValue("topics", event.topics || "")
+    }
+  }, [event, setValue])
 
   async function onSubmit(data: EventFormData) {
     setIsLoading(true)
@@ -105,20 +153,24 @@ export function EventForm() {
         formData.append("video", file)
       })
 
-      const response = await fetch("/api/events", {
-        method: "POST",
+      const url = isEditMode ? `/api/events/${event.id}` : "/api/events"
+      const method = isEditMode ? "PUT" : "POST"
+
+      const response = await fetch(url, {
+        method,
         body: formData,
       })
 
       const result = await response.json()
 
       if (!response.ok) {
-        setError(result.error || "Failed to create event")
+        setError(result.error || `Failed to ${isEditMode ? "update" : "create"} event`)
         setIsLoading(false)
         return
       }
 
       router.push(`/events/${result.event.id}`)
+      router.refresh()
     } catch (error) {
       setError("Something went wrong. Please try again.")
       setIsLoading(false)
@@ -305,7 +357,13 @@ export function EventForm() {
           Cancel
         </Button>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Creating Event..." : "Create Event"}
+          {isLoading
+            ? isEditMode
+              ? "Updating Event..."
+              : "Creating Event..."
+            : isEditMode
+            ? "Update Event"
+            : "Create Event"}
         </Button>
       </div>
     </form>

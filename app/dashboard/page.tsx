@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db/prisma"
 import { MainNav } from "@/components/navigation/main-nav"
-import { EventCard } from "@/components/events/event-card"
+import { DashboardEventCard } from "@/components/events/dashboard-event-card"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 async function getUserEvents(userId: string) {
@@ -113,7 +113,7 @@ export default async function DashboardPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {events.map((event) => (
-                  <EventCard key={event.id} event={event} />
+                  <DashboardEventCard key={event.id} event={event} />
                 ))}
               </div>
             )}

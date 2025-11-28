@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/db/prisma"
 import { MainNav } from "@/components/navigation/main-nav"
 import { EventDetail } from "@/components/events/event-detail"
@@ -27,17 +29,21 @@ export default async function EventDetailPage({
 }: {
   params: { id: string }
 }) {
+  const session = await getServerSession(authOptions)
   const event = await getEvent(params.id)
 
   if (!event) {
     notFound()
   }
 
+  // Check if current user owns the event
+  const canEdit = !event.userId || (session?.user?.id && event.userId === session.user.id)
+
   return (
     <div className="min-h-screen bg-background">
       <MainNav />
       <main className="container mx-auto px-4 py-8">
-        <EventDetail event={event} />
+        <EventDetail event={event} canEdit={canEdit} />
       </main>
     </div>
   )

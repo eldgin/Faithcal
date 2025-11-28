@@ -1,10 +1,12 @@
 "use client"
 
+import Link from "next/link"
 import Image from "next/image"
 import { format } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Clock, User, Mic, BookOpen } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Calendar, MapPin, Clock, User, Mic, BookOpen, Edit } from "lucide-react"
 import { motion } from "framer-motion"
 import { PlacementSelector } from "@/components/prime-placement/placement-selector"
 
@@ -34,9 +36,10 @@ interface EventDetailProps {
       email: string | null
     } | null
   }
+  canEdit?: boolean
 }
 
-export function EventDetail({ event }: EventDetailProps) {
+export function EventDetail({ event, canEdit = false }: EventDetailProps) {
   const imageMedia = event.media.filter((m) => m.type === "image")
   const audioMedia = event.media.filter((m) => m.type === "audio")
   const videoMedia = event.media.filter((m) => m.type === "video")
@@ -65,9 +68,19 @@ export function EventDetail({ event }: EventDetailProps) {
           <div>
             <div className="flex items-start justify-between gap-4 mb-4">
               <h1 className="text-4xl font-bold">{event.title}</h1>
-              <Badge variant="secondary" className="text-sm">
-                {event.category.name}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="text-sm">
+                  {event.category.name}
+                </Badge>
+                {canEdit && (
+                  <Link href={`/events/${event.id}/edit`}>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Edit className="h-4 w-4" />
+                      Edit
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
             <p className="text-lg text-muted-foreground whitespace-pre-line">
               {event.description}
