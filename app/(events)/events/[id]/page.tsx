@@ -37,7 +37,7 @@ export default async function EventDetailPage({
   }
 
   // Check if current user owns the event
-  const canEdit = !event.userId || (session?.user?.id && event.userId === session.user.id)
+  const canEdit = Boolean(!event.userId || (session?.user?.id && event.userId === session.user.id))
 
   return (
     <div className="min-h-screen bg-background">
