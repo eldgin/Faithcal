@@ -135,7 +135,7 @@ export default async function DashboardPage() {
                   <Card key={payment.id}>
                     <CardHeader>
                       <CardTitle className="text-base">
-                        {payment.event.title}
+                        {payment.event?.title || "Premium Subscription"}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
