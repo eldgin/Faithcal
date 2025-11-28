@@ -21,7 +21,6 @@
     "bcryptjs": "^2.4.3",
     "stripe": "^14.21.0",
     "@stripe/stripe-js": "^2.4.0",
-    "nuqs": "^1.16.0",
     "zod": "^3.23.0",
     "react-hook-form": "^7.51.0",
     "@hookform/resolvers": "^3.3.4",

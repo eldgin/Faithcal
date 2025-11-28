@@ -1,7 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useQueryState } from "nuqs"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,8 +21,9 @@ interface Category {
 
 export function SearchBar() {
   const router = useRouter()
-  const [searchQuery, setSearchQuery] = useQueryState("q", { defaultValue: "" })
-  const [category, setCategory] = useQueryState("category", { defaultValue: "" })
+  const searchParams = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "")
+  const [category, setCategory] = useState(searchParams.get("category") || "")
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
