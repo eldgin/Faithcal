@@ -67,7 +67,7 @@ export function PremiumCTA() {
                       className="text-center space-y-2"
                     >
                       <div className="flex justify-center mb-2">
-                        <div className="p-3 bg-primary/10 border border-primary">
+                        <div className="p-3 bg-primary/20 border-2 border-primary">
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                       </div>

@@ -12,9 +12,12 @@ export function MainNav() {
     <nav className="border-b border-border bg-background">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Calendar className="h-6 w-6" />
-            <span className="text-xl font-semibold">Faithcal</span>
+          <Link href="/" className="flex items-center space-x-2 group">
+            <Calendar className="h-6 w-6 text-primary group-hover:text-accent transition-colors" />
+            <span className="text-xl font-semibold">
+              <span className="text-primary">Faith</span>
+              <span className="text-accent">cal</span>
+            </span>
           </Link>
           <div className="flex items-center space-x-4">
             <Link href="/events/create">

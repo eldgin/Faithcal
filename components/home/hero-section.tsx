@@ -32,7 +32,8 @@ export function HeroSection() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Calendar className="h-8 w-8 text-primary" />
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-              Faithcal
+              <span className="text-primary">Faith</span>
+              <span className="text-accent">cal</span>
             </h1>
           </div>
           

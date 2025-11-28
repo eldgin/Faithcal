@@ -39,7 +39,7 @@ export function EventCard({ event }: EventCardProps) {
       whileHover={{ y: -4 }}
     >
       <Link href={`/events/${event.id}`}>
-        <Card className="h-full flex flex-col overflow-hidden border-border hover:border-primary transition-colors cursor-pointer">
+        <Card className="h-full flex flex-col overflow-hidden border-2 border-border hover:border-primary transition-colors cursor-pointer">
           <div className="relative w-full h-48 bg-muted">
             <Image
               src={imageUrl}

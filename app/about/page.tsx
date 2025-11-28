@@ -61,9 +61,9 @@ export default function AboutPage() {
                   <Card key={value.title}>
                     <CardHeader>
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 bg-primary/10 border border-primary">
-                          <Icon className="h-5 w-5 text-primary" />
-                        </div>
+                      <div className="p-2 bg-primary/20 border-2 border-primary">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
                         <CardTitle>{value.title}</CardTitle>
                       </div>
                     </CardHeader>

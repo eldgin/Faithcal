@@ -115,7 +115,7 @@ export function PremiumUpgrade({ isPremium }: PremiumUpgradeProps) {
               <Card className="h-full">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary/10 border border-primary">
+                    <div className="p-2 bg-primary/20 border-2 border-primary">
                       <Icon className="h-5 w-5 text-primary" />
                     </div>
                     <CardTitle className="text-lg">{feature.title}</CardTitle>
