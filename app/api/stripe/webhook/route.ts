@@ -50,7 +50,7 @@ export async function POST(request: Request) {
       await prisma.payment.create({
         data: {
           userId,
-          eventId: null, // Premium subscription doesn't have an event
+          // Premium subscription doesn't have an event, so eventId is undefined
           amount: (session.amount_total || 0) / 100,
           stripePaymentId: session.id,
           status: "completed",
