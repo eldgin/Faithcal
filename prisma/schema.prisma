@@ -66,11 +66,12 @@ model Payment {
   id              String   @id @default(cuid())
   userId          String?
   user            User?    @relation(fields: [userId], references: [id])
-  eventId         String
-  event           Event    @relation(fields: [eventId], references: [id])
+  eventId         String?
+  event           Event?   @relation(fields: [eventId], references: [id])
   amount          Float
   stripePaymentId String   @unique
   status          String   // "pending", "completed", "failed"
+  paymentType     String?  // "prime_placement", "premium"
   createdAt       DateTime @default(now())
 }
 

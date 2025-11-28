@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/db/prisma"
 import { MainNav } from "@/components/navigation/main-nav"
 import { EventCard } from "@/components/events/event-card"
-import { SearchBar } from "@/components/search/search-bar"
+import { HeroSection } from "@/components/home/hero-section"
+import { PremiumCTA } from "@/components/home/premium-cta"
 
 async function getFeaturedEvents() {
   const events = await prisma.event.findMany({
@@ -44,39 +45,32 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <MainNav />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            Discover Faith-Based Events
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Find concerts, workshops, revivals, conferences, and more
-          </p>
-        </div>
+      <main>
+        <HeroSection />
 
-        <div className="mb-12">
-          <SearchBar />
-        </div>
+        <div className="container mx-auto px-4 py-16">
+          {featuredEvents.length > 0 && (
+            <section className="mb-16">
+              <h2 className="text-3xl font-semibold mb-8">Featured Events</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredEvents.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
+            </section>
+          )}
 
-        {featuredEvents.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6">Featured Events</h2>
+          <section className="mb-16">
+            <h2 className="text-3xl font-semibold mb-8">Recent Events</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredEvents.map((event) => (
+              {recentEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
           </section>
-        )}
+        </div>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-6">Recent Events</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        </section>
+        <PremiumCTA />
       </main>
     </div>
   )
